@@ -1,4 +1,4 @@
-# sc-vsphere-template
+#vcenter-template
 
 Using Packer we can create templates without going into a hectic process for manually building machines and the provisioning them.
 

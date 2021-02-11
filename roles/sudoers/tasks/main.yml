@@ -1,0 +1,28 @@
+---
+# tasks file for sudoers
+- name: Copy sudoers file
+  copy:
+    src: sudoers
+    dest: /etc/sudoers
+
+- name: Removing default repos
+  copy:
+    src: LinoopBase.repo
+    dest: /etc/yum.repos.d/LinoopBase.repo
+
+- name: Setting up Namservers
+  template:
+    src: resolv.conf.j2
+    dest: /etc/resolv.conf
+
+- name: Create group Admin
+  group:
+    name: admin
+    state: present
+
+- name: Make admin a part of wheel group
+  user:
+    name: admin
+    state: present
+    password: Welcome123!
+    groups: admin,wheel

@@ -1,0 +1,6 @@
+---
+- name: Sudoers Deployment
+  hosts: all
+  gather_facts: no
+  roles:
+   - { role: '/var/lib/awx/projects/sudoers' }

@@ -1,0 +1,4 @@
+---
+# vars file for sudoers
+dns1: 192.168.10.15
+dns2: 8.8.8.8

@@ -1,0 +1,79 @@
+{
+  "builders": [
+    {
+      "CPUs": "{{user `vm-cpu-num`}}",
+      "RAM": "{{user `vm-mem-size`}}",
+      "RAM_reserve_all": false,
+      "boot_command": [
+        "<esc><wait>",
+        "linux ks=hd:fd0:/ks.cfg<enter>"
+      ],
+      "boot_order": "disk,cdrom,floppy",
+      "boot_wait": "10s",
+      "cluster": "{{user `vsphere-cluster`}}",
+      "convert_to_template": true,
+      "datacenter": "{{user `vsphere-datacenter`}}",
+      "datastore": "{{user `vsphere-datastore`}}",
+      "disk_controller_type": "pvscsi",
+      "floppy_files": [
+        "ks.cfg"
+      ],
+      "guest_os_type": "centos7_64Guest",
+      "insecure_connection": "true",
+      "iso_paths": [
+        "{{user `iso_url`}}"
+      ],
+      "network_adapters": [
+        {
+          "network": "{{user `vsphere-network`}}",
+          "network_card": "vmxnet3"
+        }
+      ],
+      "CPU_hot_plug": "true",
+      "RAM_hot_plug": "true",
+      "notes": "Version 1",
+      "password": "{{user `vsphere-password`}}",
+      "ssh_password": "CHANGE_ME",
+      "ssh_username": "root",
+      "storage": [
+        {
+          "disk_size": "{{user `vm-disk-size`}}",
+          "disk_thin_provisioned": true
+        }
+      ],
+      "type": "vsphere-iso",
+      "username": "{{user `vsphere-user`}}",
+      "vcenter_server": "{{user `vsphere-server`}}",
+      "vm_name": "{{user `vm-name`}}"
+    }
+  ],
+  "variables": {
+    "iso_url": "[prod-25] ISO/CentOS-7.iso",
+    "vm-cpu-num": "4",
+    "vm-disk-size": "25600",
+    "vm-mem-size": "4096",
+    "vm-name": "CentOS7-Template",
+    "vsphere-datacenter": "Datacenter",
+    "vsphere-cluster": "192.168.X.X",
+    "vsphere-datastore": "datastore-name",
+    "vsphere-network": "VM Network",
+    "vsphere-password": "CHANGE_ME",
+    "vsphere-server": "192.168.X.X",
+    "vsphere-user": "administrator@vcenter.local"
+  },
+  "provisioners": [
+    {
+      "type": "shell",
+      "scripts": [
+        "script.sh"
+      ]
+    },
+    {
+      "type": "ansible-local",
+      "playbook_file": "playbook.yml",
+      "role_paths": [
+        "roles/sudoers"
+        ]
+    }
+  ]
+}

@@ -24,5 +24,5 @@
   user:
     name: admin
     state: present
-    password: Welcome123!
+    password: CHANGE_ME
     groups: admin,wheel
